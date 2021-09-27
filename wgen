@@ -1,0 +1,27 @@
+=QUARTILE(
+  ARRAYFORMULA(
+    IF(
+      ISBLANK(
+        {"";FILTER(IMPORTRANGE(A3,"Raw Data!B2:B"&B3), IMPORTRANGE(A3,"Raw Data!K2:K"&B3) > constants!$B$3)}
+      ),
+      "",
+      IF(
+        {"";FILTER(IMPORTRANGE(A3,"Raw Data!A2:A"&B3), IMPORTRANGE(A3,"Raw Data!K2:K"&B3) > constants!$B$3)} - {FILTER(IMPORTRANGE(A3,"Raw Data!A2:A"&B3), IMPORTRANGE(A3,"Raw Data!K2:K"&B3) > constants!$B$3); ""} - {"";FILTER(IMPORTRANGE(A3,"Raw Data!B2:B"&B3), IMPORTRANGE(A3,"Raw Data!K2:K"&B3) > constants!$B$3)} > 0,
+        {"";FILTER(IMPORTRANGE(A3,"Raw Data!A2:A"&B3), IMPORTRANGE(A3,"Raw Data!K2:K"&B3) > constants!$B$3)} - {FILTER(IMPORTRANGE(A3,"Raw Data!A2:A"&B3), IMPORTRANGE(A3,"Raw Data!K2:K"&B3) > constants!$B$3); ""} - {"";FILTER(IMPORTRANGE(A3,"Raw Data!B2:B"&B3), IMPORTRANGE(A3,"Raw Data!K2:K"&B3) > constants!$B$3)},
+        ""
+      )
+    )
+  ),
+  1
+)
+*
+COUNT(
+  {"";FILTER(IMPORTRANGE(A3,"Raw Data!A2:A"&B3), IMPORTRANGE(A3,"Raw Data!K2:K"&B3) > constants!$B$3)}
+)
+/
+COUNT(
+  IMPORTRANGE(A3,"Raw Data!A2:A"&B3)
+)
+
+filters out background resets (based on igt threshold), and gets the reset duration for all worlds that were played humanly
+takes the quartile or median of that and multiplies it by the number of all non background resets, then divides that number by total resets
